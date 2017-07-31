@@ -1,7 +1,41 @@
 #!/usr/bin/env sh
 
+abosulute_path() {
+    [[ "$1" = /* ]] && printf "$src" ||  printf "$(pwd)/$src"
+}
 
-[ -z "$2" ] && target="$1" || target="$2"
-ln -sf "$1" "$HOME/$target"
+subtract_git_path() {
+    path="$(absolute_path $1)"
+    printf "${path#$2}"
+}
+
+absolute_to_relative() {
+    absolute_path "$1" && printf "$(basename $1)" || printf "$1"
+}
+
+source_relative_path() {
+git_dir="$(git rev-parse --show-toplevel 2> /dev/null)" && \
+    subtract_git_path "$1" "$git_dir"  || \
+    absolute_to_relative "$1"
+}
+
+source() {
+    [ -d "$1" ] && printf ${1%/}/*" || printf "$1"
+}
+
+target() {
+    printf "$HOME/$(source_relative_path)"
+}
+
+link() {
+    cp -asf "$1" "$2"
+}
+
+src="$1"
+target="$2"
+
+[ -z "$target" ] && \
+    link "$src" "$target" || \
+    link "$(source "$src")" "(target "$target")"
 
 
