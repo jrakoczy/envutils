@@ -1,7 +1,11 @@
 #!/usr/bin/env sh
 
+is_absolute() {
+    [[ "$1" = /* ]]
+}
+
 abosulute_path() {
-    [[ "$1" = /* ]] && printf "$src" ||  printf "$(pwd)/$src"
+    is_absolute "$1" && printf "$1" ||  printf "$(pwd)/$1"
 }
 
 subtract_git_path() {
@@ -10,7 +14,7 @@ subtract_git_path() {
 }
 
 absolute_to_relative() {
-    absolute_path "$1" && printf "$(basename $1)" || printf "$1"
+    is_absolute "$1" && printf "$(basename $1)" || printf "$1"
 }
 
 source_relative_path() {
@@ -19,11 +23,11 @@ git_dir="$(git rev-parse --show-toplevel 2> /dev/null)" && \
     absolute_to_relative "$1"
 }
 
-source() {
-    [ -d "$1" ] && printf ${1%/}/*" || printf "$1"
+source_path() {
+    [ -d "$1" ] && printf "${1%/}/*" || printf "$1"
 }
 
-target() {
+target_path() {
     printf "$HOME/$(source_relative_path)"
 }
 
@@ -36,6 +40,4 @@ target="$2"
 
 [ -z "$target" ] && \
     link "$src" "$target" || \
-    link "$(source "$src")" "(target "$target")"
-
-
+    link "$(source_path "$src")" "(target_path "$target")"
