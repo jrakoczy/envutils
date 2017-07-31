@@ -1,5 +1,8 @@
 #!/usr/bin/env sh
 
+# TODO --help
+# TODO --ignore-git
+
 is_absolute() {
     [[ "$1" = /* ]]
 }
