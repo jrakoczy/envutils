@@ -56,5 +56,5 @@ src="$1"
 target="$2"
 
 [ -z "$target" ] && \
-    link "$src" "$target" || \
-    link "$src" "$(target_path "$target")"
+    link "$(source_path $src)" "$target" || \
+    link "$(source_path $src)" "$(target_path "$target")"
