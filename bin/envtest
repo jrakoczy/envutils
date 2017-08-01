@@ -1,7 +1,20 @@
 #!/usr/bin/env sh
 
-# TODO --help
-# TODO --ignore-git
+opt_parse() {
+    for arg in "$@"
+    do
+        case $1 in
+            '-h'|'--help')
+                print_help
+                exit 0
+                ;;
+            '-i'|'--ignore-git')
+                return 1
+                ;;
+        esac
+    done
+    return 0
+}
 
 is_absolute() {
     [[ "$1" = /* ]]
@@ -21,9 +34,10 @@ absolute_to_relative() {
 }
 
 source_relative_path() {
-git_dir="$(git rev-parse --show-toplevel 2> /dev/null)" && \
-    subtract_git_path "$1" "$git_dir"  || \
-    absolute_to_relative "$1"
+   opt_parse "$@" && \
+        git_dir="$(git rev-parse --show-toplevel 2> /dev/null)" && \
+        subtract_git_path "$1" "$git_dir"  || \
+        absolute_to_relative "$1"
 }
 
 source_path() {
