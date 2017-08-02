@@ -78,7 +78,6 @@ absolute_to_relative() {
     is_absolute "$1" && printf "$(basename $1)" || printf "$1"
 }
 
-# TODO non-git/git/relative
 source_relative_path() {
    $1 && \
        git_dir="$(git rev-parse --show-toplevel 2> /dev/null)" && \
