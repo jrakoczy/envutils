@@ -117,5 +117,5 @@ src="${@:OPTIND:1}"
 target="${@:OPTIND+1:1}"
 
 [ -z "$target" ] && \
-    link "$(source_path $src)" "$(target_path "$ignore_git" "$src")" || \
-    link "$(source_path $src)" "$target"
+    link "$1" "$(target_path "$ignore_git" "$src")" || \
+    link "$1" "$target"
