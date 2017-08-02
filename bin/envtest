@@ -1,62 +1,63 @@
 #!/usr/bin/env sh
 
 print_help() {
-    printf "USAGE: envtest [<option>] <source> [<target>]
+    printf "USAGE: envtest [<option>] <links> [<links>]
 
         OPERANDS:
-            <source> — either a file or a directory; if it's a directory,
+            <target> — either a file or a directory; if it's a directory
                        all its content will be sym-linked recursively.
-            <target> — either a link name or a directory where all links
+            <links> — either a link name or a directory where all links
+                       reside.
 
         DESCRIPTION:
-            Inteligentlly sym-links <source> to <target>. If the <target>
-            operand is not present, it's inferred from <source>.
-            If <source> is inside a Git directory, then this directory is
+            Inteligentlly sym-links <links> to <target>. If the <links>
+            operand is not present, it's inferred from <target>.
+            If <target> is inside a Git directory, then this directory is
             treated as a sym-linking root — its path is replaced with
             \$HOME during the linking process. This allows you to
             convenietly test your dot-files that are kept in a separate Git directory.
 
         OPTIONS:
             -h
-            -i — do not test whether the <source> path is within a Git directory.
+            -i — do not test whether the <target> path is within a Git directory.
 
         EXAMPLES:
 
-            The content of <source> is sym-linked directly from within
-            /absolute/target-directory (it doesn't matter whether <source>
+            The content of <target> is sym-linked directly from within
+            /absolute/links-directory (it doesn't matter whether <target>
             is within a Git directory):
 
-                envtest /absolute/source-directory /absolute/target-directory
+                envtest /absolute/target-directory /absolute/links-directory
 
 
-            <source> is directory in a non-Git directory. In such case
-            its content is symlinked from wihtin \$HOME/source-directory.
+            <target> is directory in a non-Git directory. In such case
+            its content is symlinked from wihtin \$HOME/target-directory.
 
-                envtest /absolute/path/source-directory
+                envtest /absolute/path/target-directory
 
-            <source> is a regular file in a non-Git directory. It's
+            <target> is a regular file in a non-Git directory. It's
             sym-linked to \$HOME/source-file:
 
                 envtest relative/source-file
 
-            <source> is a directory in a non-Git directory. Its content is
-            sym-linked from within \$HOME/relative/source-directory:
+            <target> is a directory in a non-Git directory. Its content is
+            sym-linked from within \$HOME/relative/target-directory:
 
-                envtest relatve/source-directory
+                envtest relatve/target-directory
 
-            <source> is a directory in a Git directory. Let's assume the
-            <source> absoulte path is
-            /git-directory/foo/relative/source-directory. In such case all
+            <target> is a directory in a Git directory. Let's assume the
+            <target> absoulte path is
+            /git-directory/foo/relative/target-directory. In such case all
             its content is sym-linked from within $HOME/foo/relative/source-
             directory:
 
-                envtest relative/source-directory
+                envtest relative/target-directory
 
             The same applies to absolute paths that point to a file or a
-            directory in a Git directory. The content of <source> is sym-
-            linked from within \$HOME/foo/source-directory:
+            directory in a Git directory. The content of <target> is sym-
+            linked from within \$HOME/foo/target-directory:
 
-                envtest /absolute/git-directory/foo/source-directory
+                envtest /absolute/git-directory/foo/target-directory
         "
 }
 
