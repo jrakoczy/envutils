@@ -70,7 +70,7 @@ abosulute_path() {
 }
 
 subtract_git_path() {
-    path="$(absolute_path $1)"
+    local path="$(absolute_path $1)"
     printf "${path#$2}"
 }
 
@@ -80,13 +80,14 @@ absolute_to_relative() {
 
 source_relative_path() {
    $1 && \
-       git_dir="$(git rev-parse --show-toplevel 2> /dev/null)" && \
+       local git_dir="$(git rev-parse --show-toplevel 2> /dev/null)" && \
         subtract_git_path "$2" "$git_dir"  || \
         absolute_to_relative "$2"
 }
 
 source_path() {
-    [ -d "$1" ] && printf "${1%/}/*" || printf "$1"
+    local path="$(absolute_path "$1")"
+    [ -d "$path" ] && printf "${path%/}/*" || printf "$path"
 }
 
 target_path() {
