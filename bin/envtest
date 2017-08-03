@@ -19,7 +19,7 @@ print_help() {
 
         OPTIONS:
             -h
-            -i — do not test whether the <target> path is within a Git directory.
+            -i — do not check whether the <target> path is within a Git directory.
 
         EXAMPLES:
 
@@ -48,7 +48,7 @@ print_help() {
             <target> is a directory in a Git directory. Let's assume the
             <target> absoulte path is
             /git-directory/foo/relative/target-directory. In such case all
-            its content is sym-linked from within $HOME/foo/relative/target-
+            its content is sym-linked from within \$HOME/foo/relative/target-
             directory:
 
                 envtest relative/target-directory
