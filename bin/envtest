@@ -69,6 +69,10 @@ absolute_path() {
     is_absolute "$1" && printf "$1" ||  printf "$(pwd)/$1"
 }
 
+git_path() {
+    git -C "$(dirname "$1")" rev-parse --show-toplevel 2> /dev/null
+}
+
 subtract_git_path() {
     local path="$(absolute_path $1)"
     printf "${path#$2}"
@@ -80,7 +84,7 @@ absolute_to_relative() {
 
 target_relative_path() {
    ! $1 && \
-       local git_dir="$(git rev-parse --show-toplevel 2> /dev/null)" && \
+       local git_dir="$(git_path "$2")"  && \
         subtract_git_path "$2" "$git_dir/"  || \
         absolute_to_relative "$2"
 }
