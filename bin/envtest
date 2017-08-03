@@ -89,18 +89,13 @@ target_relative_path() {
         absolute_to_relative "$2"
 }
 
-target_path() {
-    local path="$(absolute_path "$1")"
-    [ -d "$path" ] && printf "${path%/}/*" || printf "$path"
-}
-
 links_path() {
     printf "$HOME/$(target_relative_path "$1" "$2")"
 }
 
 link() {
     mkdir -p "$(dirname "$2")"
-    cp -asfr "$(target_path "$1")" "$2"
+    cp -asfr "$(absolute_path "$1")" "$2"
 }
 
 ignore_git=false
