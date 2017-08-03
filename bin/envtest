@@ -36,9 +36,9 @@ print_help() {
                 envtest /absolute/path/target-directory
 
             <target> is a regular file in a non-Git directory. It's
-            sym-linked to \$HOME/source-file:
+            sym-linked to \$HOME/target-file:
 
-                envtest relative/source-file
+                envtest relative/target-file
 
             <target> is a directory in a non-Git directory. Its content is
             sym-linked from within \$HOME/relative/target-directory:
@@ -48,7 +48,7 @@ print_help() {
             <target> is a directory in a Git directory. Let's assume the
             <target> absoulte path is
             /git-directory/foo/relative/target-directory. In such case all
-            its content is sym-linked from within $HOME/foo/relative/source-
+            its content is sym-linked from within $HOME/foo/relative/target-
             directory:
 
                 envtest relative/target-directory
@@ -78,24 +78,25 @@ absolute_to_relative() {
     is_absolute "$1" && printf "$(basename $1)" || printf "$1"
 }
 
-source_relative_path() {
+target_relative_path() {
    ! $1 && \
        local git_dir="$(git rev-parse --show-toplevel 2> /dev/null)" && \
-        subtract_git_path "$2" "$git_dir"  || \
+        subtract_git_path "$2" "$git_dir/"  || \
         absolute_to_relative "$2"
 }
 
-source_path() {
+target_path() {
     local path="$(absolute_path "$1")"
     [ -d "$path" ] && printf "${path%/}/*" || printf "$path"
 }
 
-target_path() {
-    printf "$HOME/$(source_relative_path "$1" "$2")"
+links_path() {
+    printf "$HOME/$(target_relative_path "$1" "$2")"
 }
 
 link() {
-    cp -asf "$(source_path "$1")" "$2"
+    mkdir -p "$(dirname "$2")"
+    cp -asfr "$(target_path "$1")" "$2"
 }
 
 ignore_git=false
@@ -113,9 +114,9 @@ do
     esac
 done
 
-src="${@:OPTIND:1}"
-target="${@:OPTIND+1:1}"
+target="${@:OPTIND:1}"
+links="${@:OPTIND+1:1}"
 
-[ -z "$target" ] && \
-    link "$1" "$(target_path "$ignore_git" "$src")" || \
-    link "$1" "$target"
+[ -z "$links" ] && \
+    link "$target" "$(links_path "$ignore_git" "$target")" || \
+    link "$target" "$links"
