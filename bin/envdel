@@ -3,7 +3,7 @@
 config_meta="$HOME/.env-meta"
 
 set -e
-[ ! -r "$config_meta" ] && exit 1
+[ ! -r "$config_meta" ] && exit 0
 confirmation-prompt "Are you sure you want to delete the current env?"
 
 # Discard the previously loaded env config stored in the user's home.
