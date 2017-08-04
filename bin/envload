@@ -17,7 +17,7 @@ store_path=\
 #
 # Note that, if a config file already exists in the user's home, it will
 # be OVERWRITTEN.
-cp -asf "$store_path/*" "$HOME"
+cp -asf "$store_path"/* "$HOME"
 
 # All loaded file names are stored in an additional meta-file, so the
 # whole environment may be removed conveniently with `envdel`.
