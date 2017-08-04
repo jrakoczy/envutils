@@ -36,7 +36,7 @@ print_help() {
                 envtest /absolute/path/target-directory
 
             <target> is a regular file in a non-Git directory. It's
-            sym-linked to \$HOME/target-file:
+            sym-linked to \$HOME/relative/target-file:
 
                 envtest relative/target-file
 
