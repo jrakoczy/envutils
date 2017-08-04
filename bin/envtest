@@ -94,8 +94,12 @@ links_path() {
 }
 
 link() {
+    local path="$(absolute_path "$1")"
+    [[ "$path" -ef "$2" ]] && \
+        printf "You're trying to create a circular symlink.\n" && \
+        exit 1
     mkdir -p "$(dirname "$2")"
-    cp -asfr "$(absolute_path "$1")" "$2"
+    cp -asfr "$path" "$2"
 }
 
 ignore_git=false
