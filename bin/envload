@@ -20,10 +20,10 @@ store_path="$(package_path '@package_name@')/config"
 #
 # Note that, if a config file already exists in the user's home, it will
 # be OVERWRITTEN.
-cp -asf "$store_path"/* "$HOME"
+cp -asf "$store_path"/. "$HOME"
 
 # All loaded file names are stored in an additional meta-file, so the
 # whole environment may be removed conveniently with `envdel`.
 config_meta="$HOME/.env-meta"
-ls "$store_path" | sed "s#^.*config#$HOME#" > "$config_meta"
+find "$store_path" -type f -follow | sed "s#^.*/config/#$HOME/#" > "$config_meta"
 printf "$config_meta" >> "$config_meta"
