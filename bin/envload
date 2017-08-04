@@ -2,13 +2,16 @@
 # Run this script to load all environment configuration files from the
 # Nix store to the user's home directory.
 
+package_path() {
+   printf "$(nix-env -q --installed --no-name --out-path "$1")"
+}
+
 set -e
 confirmation-prompt "Are you sure you want to overwrite the current env?"
 
 envdel
 
-store_path=\
-    "$(nix-env -q --installed --no-name --out-path @package_name@)/config"
+store_path="$(package_path '@package_name@')/config"
 
 # We are sym-linking Nix store paths, so all config files will be
 # non-modifiable. If you need to change a file in an imperative way
