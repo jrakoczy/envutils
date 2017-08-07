@@ -11,7 +11,9 @@ confirmation-prompt "Are you sure you want to overwrite the current env?"
 
 envdel
 
-store_path="$(package_path '@package_name@')/config"
+store_path="$(package_path @package_name@)/config"
+destination_path="$HOME"
+
 
 # We are sym-linking Nix store paths, so all config files will be
 # non-modifiable. If you need to change a file in an imperative way
@@ -20,10 +22,10 @@ store_path="$(package_path '@package_name@')/config"
 #
 # Note that, if a config file already exists in the user's home, it will
 # be OVERWRITTEN.
-cp -asf "$store_path"/. "$HOME"
+cp -asf "$store_path"/. "$destination_path"
 
 # All loaded file names are stored in an additional meta-file, so the
 # whole environment may be removed conveniently with `envdel`.
-config_meta="$HOME/.env-meta"
-find "$store_path" -type f -follow | sed "s#^.*/config/#$HOME/#" > "$config_meta"
+config_meta="$destination_path/.env-meta"
+find "$store_path" -type f -follow | sed "s#^.*/config/#$destination_path/#" > "$config_meta"
 printf "$config_meta" >> "$config_meta"
