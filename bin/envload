@@ -11,7 +11,8 @@ confirmation-prompt "Are you sure you want to overwrite the current env?"
 
 envdel
 
-store_path="$(package_path @package_name@)/config"
+package_name="$1"
+store_path="$(package_path "$package_name")/config"
 destination_path="$HOME"
 
 
