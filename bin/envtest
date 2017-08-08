@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 print_help() {
-    printf "USAGE: envtest [<option>] <links> [<links>]
+    printf "USAGE: envtest [<option>] <target> [<links>]
 
         OPERANDS:
             <target> — either a file or a directory; if it's a directory
