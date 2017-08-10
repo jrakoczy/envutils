@@ -62,7 +62,5 @@ process, they will be removed.
 more information, please run:
 
 ```bash
-envtest  --h
+envtest  -h
 ```
-
-
