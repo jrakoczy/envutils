@@ -47,8 +47,8 @@ envload
 
 And that's it. All files are in the user's home directory.
 
-*Please bear in mind, that this command will delete previously loaded
-files and overwrite any manually added or modified ones.*
+**Please bear in mind, that this command will delete previously loaded
+files and overwrite any manually added or modified ones.**
 
 ### Deleting
 
