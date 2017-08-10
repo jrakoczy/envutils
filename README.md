@@ -9,12 +9,11 @@ NixOS currently doesn't provide a convenient way to manage user dot-files
 (although this may be a subject to change as [a more robust form of this
 feature is being actively developed](https://github.com/NixOS/nixpkgs/pull/9250)).
 
-I wanted a declarative solution that allows me to exploit all of benefits
+I wanted a declarative solution that would allow me to exploit all benefits
 of the Nix package manager while still providing convenient means to test a
-configuration file without need to rebuild everything.
-In contrast to [`.nixpkgs` ](https://github.com/kamilchm/.nixpkgs),
+configuration file without a need to rebuild everything.
 
-Envutils takes a simplified approach, I've implemented to get more
+Envutils takes a simplified approach. I've implemented it to get more
 experience with the system and its package manager. It suits my needs, but
 you may want to consider [other options](https://github.com/rycee/home-manager)
 if you need something more than mere dot-files management.
@@ -34,9 +33,9 @@ environment package they choose by running:
 nix-env -i <env-name>-environment
 ```
 
-However, this doesn't mean that the environment is loaded yet. For more
-information on how to add a custom nixpkgs repository, please take a look
-at [the aux-nixpkgs README](https://github.com/jrakoczy/aux-nixpkgs/blob/master/README.md).
+However, this doesn't mean that the environment is loaded yet.
+
+For more information on how to add a custom nixpkgs repository, please take a lookat [the aux-nixpkgs README](https://github.com/jrakoczy/aux-nixpkgs/blob/master/README.md).
 
 ### Loading
 
@@ -47,17 +46,20 @@ envload
 ```
 
 And that's it. All files are in the user's home directory.
-There are some caveats
+
+*Please bear in mind, that this command will delete previously loaded
+files and overwrite any manually added or modified ones.*
 
 ### Deleting
 
 `envdel` will remove any files loaded to the user's home directory by a
-previous execution of `envload`. If some directories get empty, they will be
-removed in the process.
+previous execution of `envload`. If some directories get empty in the
+process, they will be removed.
 
 ### Testing
 
-For more information, please run:
+`envtest` cleverly sym-links files or directories to your user's home. For
+more information, please run:
 
 ```bash
 envtest  --h
