@@ -35,7 +35,8 @@ nix-env -i <env-name>-environment
 
 However, this doesn't mean that the environment is loaded yet.
 
-For more information on how to add a custom nixpkgs repository, please take a lookat [the aux-nixpkgs README](https://github.com/jrakoczy/aux-nixpkgs/blob/master/README.md).
+For more information on how to add a custom nixpkgs repository, please take
+a look at [the aux-nixpkgs README](https://github.com/jrakoczy/aux-nixpkgs/blob/master/README.md).
 
 ### Loading
 
