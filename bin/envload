@@ -29,4 +29,8 @@ cp -asf "$store_path"/. "$destination_path"
 # whole environment may be removed conveniently with `envdel`.
 config_meta="$destination_path/.env-meta"
 find "$store_path" -type f -follow | sed "s#^.*/config/#$destination_path/#" > "$config_meta"
-printf "$config_meta" >> "$config_meta"
+printf "%s" "$config_meta" >> "$config_meta"
+
+# The commands below are environment-specific any may very depending on the
+# packages you choose.
+nvim-plug
