@@ -7,7 +7,7 @@ package_path() {
 }
 
 set -e
-confirmation-prompt "Are you sure you want to overwrite the current env?"
+./confirmation-prompt "Are you sure you want to overwrite the current env?"
 
 envdel
 
@@ -33,4 +33,4 @@ printf "%s" "$config_meta" >> "$config_meta"
 
 # The commands below are environment-specific any may very depending on the
 # packages you choose.
-nvim-plug
+./nvim-plug
