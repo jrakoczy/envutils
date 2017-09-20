@@ -7,7 +7,7 @@ package_path() {
 }
 
 package_name="$1"
-store_path="$(package_path "$package_name")/config"
+store_path="$(package_path "$package_name")"
 destination_path="$HOME"
 script_path="$(dirname "$(readlink -f "$0")")"
 
@@ -23,12 +23,14 @@ envdel
 #
 # Note that, if a config file already exists in the user's home, it will
 # be OVERWRITTEN.
-cp -asf "$store_path/." "$destination_path"
+ find "$store_path" -maxdepth 1 -mindepth 1 -not -name '.git' -not -name 'bin' -exec\
+     cp -asf '{}' "$destination_path" ';'
 
 # All loaded file names are stored in an additional meta-file, so the
 # whole environment may be removed conveniently with `envdel`.
 config_meta="$destination_path/.env-meta"
-find "$store_path" -type f -follow | sed "s#^.*/config/#$destination_path/#" > "$config_meta"
+find "$store_path" -type f -follow -not -name '.git' -not -name 'bin' |\
+    sed "s#^$store_path#$destination_path/#" > "$config_meta"
 printf "%s" "$config_meta" >> "$config_meta"
 
 # The commands below are environment-specific any may very depending on the
