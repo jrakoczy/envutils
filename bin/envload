@@ -3,7 +3,7 @@
 # Nix store to the user's home directory.
 
 package_path() {
-   printf "$(nix-env -q --installed --no-name --out-path "$1")"
+   printf "$(nix-env -f '<jrakoczy-pkgs>' -qa --no-name --out-path "$1")"
 }
 
 set -e
