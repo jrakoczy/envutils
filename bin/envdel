@@ -1,10 +1,11 @@
 #!/usr/bin/env sh
 
 config_meta="$HOME/.env-meta"
+script_path="$(dirname "$(readlink -f "$0")")"
 
 set -e
 [ ! -r "$config_meta" ] && exit 0
-./confirmation-prompt "Are you sure you want to delete the current env?"
+"$script_path"/confirmation-prompt "Are you sure you want to delete the current env?"
 
 # Discard the previously loaded env config stored in the user's home.
 cat "$config_meta" | xargs rm

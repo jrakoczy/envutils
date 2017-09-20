@@ -6,15 +6,15 @@ package_path() {
    printf "$(nix-env -f '<jrakoczy-pkgs>' -qa --no-name --out-path "$1")"
 }
 
-set -e
-./confirmation-prompt "Are you sure you want to overwrite the current env?"
-
-envdel
-
 package_name="$1"
 store_path="$(package_path "$package_name")/config"
 destination_path="$HOME"
+script_path="$(dirname "$(readlink -f "$0")")"
 
+set -e
+"$script_path"/confirmation-prompt "Are you sure you want to overwrite the current env?"
+
+envdel
 
 # We are sym-linking Nix store paths, so all config files will be
 # non-modifiable. If you need to change a file in an imperative way
@@ -23,7 +23,7 @@ destination_path="$HOME"
 #
 # Note that, if a config file already exists in the user's home, it will
 # be OVERWRITTEN.
-cp -asf "$store_path" "$destination_path"
+cp -asf "$store_path/." "$destination_path"
 
 # All loaded file names are stored in an additional meta-file, so the
 # whole environment may be removed conveniently with `envdel`.
@@ -33,4 +33,4 @@ printf "%s" "$config_meta" >> "$config_meta"
 
 # The commands below are environment-specific any may very depending on the
 # packages you choose.
-./nvim-plug
+"$script_path"/nvim-plug
