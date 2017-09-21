@@ -23,14 +23,15 @@ envdel
 #
 # Note that, if a config file already exists in the user's home, it will
 # be OVERWRITTEN.
- find "$store_path" -maxdepth 1 -mindepth 1 -not -name '.git' -not -name 'bin' -exec\
+find "$store_path" -maxdepth 1 -mindepth 1 -not -name '.git' -not -name 'bin' -exec\
      cp -asf '{}' "$destination_path" ';'
 
 # All loaded file names are stored in an additional meta-file, so the
 # whole environment may be removed conveniently with `envdel`.
 config_meta="$destination_path/.env-meta"
-find "$store_path" -type f -follow -not -name '.git' -not -name 'bin' |\
-    sed "s#^$store_path#$destination_path/#" > "$config_meta"
+find "$store_path" -type f -follow -not -path '*.git*' -not -path '*bin*' |\
+    sed "s#^$store_path#$destination_path#" > "$config_meta"
+
 printf "%s" "$config_meta" >> "$config_meta"
 
 # The commands below are environment-specific any may very depending on the
