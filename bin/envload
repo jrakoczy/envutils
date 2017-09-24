@@ -34,6 +34,6 @@ find "$store_path" -type f -follow -not -path '*.git*' -not -path '*bin*' |\
 
 printf "%s" "$config_meta" >> "$config_meta"
 
-# The commands below are environment-specific any may very depending on the
+# The commands below are environment-specific any may vary depending on the
 # packages you choose.
 "$script_path"/nvim-plug
