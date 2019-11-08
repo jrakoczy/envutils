@@ -28,7 +28,7 @@ find_opts=( -mindepth 1 -not -name '.git' -not -name 'bin' )
 
 # Directories with correct access permissions.
 find "$store_path" "${find_opts[@]}" -type d |\
-    sed "s$^$store_path#$destination_path#" |\
+    sed "s#^$store_path#$destination_path#" |\
     xargs mkdir -p
 
 # Files as sym-links.
